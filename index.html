@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Set title and set up Progressive Web App functionality -->
+    <title>OpenCamRemote Web Control</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="OpenCamRemote">
+  </head>
+  <body>
+    <!-- Pan and Tilt sliders -->
+    <div class="pantiltcontainer">
+      Pan
+      <input type="range" min="0" max="180" value="0" class="slider" id="pan">
+      Tilt
+      <input type="range" min="0" max="180" value="0" class="slider" id="tilt">
+    </div>
+    
+    <!-- Home Button -->
+    <button id="homeButton" onclick="socket.emit('home', true);">Home System</button>
+    
+    <!-- Socket.IO -->
+    <script src="/socket.io/socket.io.js"></script>
+    
+    <!-- General Javascript -->
+    <script>
+      // Initialize Socket.IO
+      var socket = io();
+
+      // Create variables for elements
+      var pan = document.getElementById('pan');
+      var tilt = document.getElementById('tilt');
+      var homeButton = document.getElementById('homeButton');
+
+      // Send messages when controls are moved
+      pan.oninput = function() {
+        socket.emit('pan', this.value);
+      }
+      tilt.oninput = function() {
+        socket.emit('tilt', this.value);
+      }
+      
+      // Move controls when messages are recieved
+      socket.on('pan', function(msg) {
+        pan.value = msg;
+      });
+      socket.on('tilt', function(msg) {
+        tilt.value = msg;
+      });
+    </script>
+    
+    <!-- Styling -->
+    <style>
+      .pantiltcontainer {
+        /* Set Slider Container to full width */
+        width: 100%;
+      }
+      
+      .slider {
+        width: 100%; /* Full-width */
+        height: 25px;
+        -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+        transition: opacity .2s;
+      }
+    </style>
+  </body>
+</html>
