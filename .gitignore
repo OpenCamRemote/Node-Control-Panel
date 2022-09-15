@@ -102,3 +102,9 @@ dist
 
 # TernJS port file
 .tern-port
+
+# Misc NPM things
+package-lock.json
+
+# Geany project file
+project.geany
