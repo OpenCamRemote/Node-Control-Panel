@@ -1,7 +1,6 @@
 ---
 layout: default
 title: BudgetPanTilt
-nav_order: 1
 ---
 
 # OpenCamRemote-BudgetPanTilt
